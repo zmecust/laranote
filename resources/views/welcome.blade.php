@@ -21,7 +21,10 @@
     </head>
     <body>
         <div id="app">
-            <example></example>
+            <div id="test-editormd">
+               <textarea name="test-editormd" style="display:none;"></textarea>
+            </div>
+            @include('markdown::encode',['editors'=>['test-editormd']])
         </div>
         <script src="./js/app.js"></script>
     </body>
