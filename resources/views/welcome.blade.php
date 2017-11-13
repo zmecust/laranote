@@ -20,7 +20,9 @@
         </style>
     </head>
     <body>
-        <div id="app"></div>
+        <div id="app">
+            <example></example>
+        </div>
         <script src="./js/app.js"></script>
     </body>
 </html>
