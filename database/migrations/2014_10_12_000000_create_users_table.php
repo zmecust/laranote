@@ -19,8 +19,9 @@ class CreateUsersTable extends Migration
             $table->string('avatar')->nullable();
             $table->string('email')->unique();
             $table->string('password');
-            $table->enum('is_banned', ['T', 'F'])->default('T')->index();
-            $table->enum('email_notify_enabled', ['T', 'F'])->default('T')->index();
+            $table->integer('notes_count')->default(0)->comment('笔记数');
+            $table->enum('is_banned', ['T', 'F'])->default('F')->index();
+            $table->enum('email_notify_enabled', ['T', 'F'])->default('F')->index();
             $table->rememberToken();
             $table->timestamps();
         });

@@ -7,8 +7,8 @@
     $(function() {
         @foreach($editors as $editor)
         editormd("{{$editor}}", {
-            width: "95%",
-            height: 640,
+            width: "100%",
+            height: 700,
             markdown : "",
             path : "{{asset('vendor/markdown/lib')}}/",
             toolbarIcons : function() {
