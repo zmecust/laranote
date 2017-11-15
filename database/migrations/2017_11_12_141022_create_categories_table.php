@@ -15,7 +15,6 @@ class CreateCategoriesTable extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('parent_id')->default(0)->comment('父级 id');
             $table->integer('notes_count')->default(0)->comment('笔记数');
             $table->tinyInteger('weight')->default(0)->comment('权重');
             $table->string('name')->index()->comment('名称');

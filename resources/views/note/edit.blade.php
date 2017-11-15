@@ -1,7 +1,7 @@
 @extends('app')
 @section('content')
     <div style="width: 96%; margin-left: 2%">
-        <form class="form-horizontal" role="form" method="POST" action="/notes">  
+        <form class="form-horizontal" role="form" method="PATCH" action="/notes/{{ $note->id }}">  
             {!! csrf_field() !!}
             
             @include('note.form') 
