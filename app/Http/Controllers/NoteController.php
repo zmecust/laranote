@@ -41,12 +41,6 @@ class NoteController extends Controller
         return view('note.create', compact('tags', 'categories'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(NoteCreateRequest $request)
     {
         Auth::loginUsingId(1);
@@ -61,7 +55,6 @@ class NoteController extends Controller
         Category::find($request->get('category'))->increment('notes_count');
         Auth::user()->increment('notes_count');
         $note->tags()->attach($tags);
-        dd($note->toArray());
         return redirect()->action('NoteController@show', ['id' => $note->id]);
     }
 
@@ -73,7 +66,8 @@ class NoteController extends Controller
      */
     public function show(Note $note)
     {
-        //
+        //$note->body = \MarkdownEditor::parse($note->body);
+        return view('note.show', compact('note'));
     }
 
     /**
@@ -86,19 +80,33 @@ class NoteController extends Controller
     {
         $tags = Tag::pluck('name','id');
         $categories = Category::pluck('name','id');
-        return view('note.create', compact('note', 'tags', 'categories'));
+        return view('note.edit', compact('note', 'tags', 'categories'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Note  $note
-     * @return \Illuminate\Http\Response
-     */
     public function update(NoteCreateRequest $request, Note $note)
     {
-        //
+        Auth::loginUsingId(1);
+        $data = [
+            'title' => $request->get('title'),
+            'category_id' => $request->get('category'),
+            'body' => $request->get('body'),
+            'user_id' => Auth::id()
+        ];
+        $note->update($data);
+        if ($addTags = $this->noteRepository->editNotes($request->get('tags'), $note->id)) {
+            foreach ($addTags as $addTag) {
+                if(! is_numeric($addTag)){
+                    $note->tags()->create([
+                        'name' => $addTag,
+                        'articles_count' => 1,
+                    ]);
+                } else {
+                    $note->tags()->attach($addTag);
+                    Tag::where('id', $addTag)->increment('count', 1);
+                }
+            }
+        }
+        return redirect()->action('NoteController@show', ['id' => $note->id]);
     }
 
     /**

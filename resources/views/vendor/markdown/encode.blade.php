@@ -8,7 +8,7 @@
         @foreach($editors as $editor)
         editormd("{{$editor}}", {
             width: "100%",
-            height: 700,
+            height: 750,
             markdown : "",
             path : "{{asset('vendor/markdown/lib')}}/",
             toolbarIcons : function() {
@@ -17,6 +17,7 @@
             imageUpload : true,
             imageFormats : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
             imageUploadURL : "{{url('markdown/upload')}}",
+            emoji : true
         });
         @endforeach
     });

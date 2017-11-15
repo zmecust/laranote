@@ -7,12 +7,12 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Laravel</title>
     <link href="/css/app.css" rel="stylesheet" type="text/css">
+    <link href="/vendor/markdown/css/editormd.min.css" rel="stylesheet" type="text/css">
     <!-- Styles -->
     <style>
         html, body {
-            height: 100vh;
             margin: 0;
-            background-color: #eee;
+            background-color: #f4f4f4;
         }
     </style>
 </head>
