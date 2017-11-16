@@ -7,14 +7,6 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Laravel</title>
     <link href="/css/app.css" rel="stylesheet" type="text/css">
-    <link href="/vendor/markdown/css/editormd.min.css" rel="stylesheet" type="text/css">
-    <!-- Styles -->
-    <style>
-        html, body {
-            margin: 0;
-            background-color: #f4f4f4;
-        }
-    </style>
 </head>
 <body>
     <div id="app">

@@ -4,7 +4,7 @@ return [
     "dirver"      => ['local'], //存储平台 ['local', 'qiniu', 'aliyun']
     "connections" => [
         "local"  => [
-            'prefix' => 'uploads/markdown', //本地存储位置，默认uploads
+            'prefix' => 'storage/note', //本地存储位置，默认uploads
         ],
         "qiniu"  => [
             'access_key' => '',

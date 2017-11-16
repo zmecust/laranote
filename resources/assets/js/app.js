@@ -7,7 +7,7 @@
 
 require('./bootstrap');
 
-window.Vue = require('vue');
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -15,7 +15,11 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+ElementUI = require('element-ui');
+Vue.use(ElementUI);
+
 Vue.component('example', require('./components/Example.vue'));
+Vue.component('sidebar', require('./components/Sidebar.vue'));
 
 const app = new Vue({
     el: '#app'

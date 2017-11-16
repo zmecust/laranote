@@ -1,6 +1,7 @@
 <!--如果在页面其他位置引入过jquery，此处引用可以删除-->
 <script src="{{asset('vendor/markdown/js/jquery.min.js')}}"></script>
 
+<link rel="stylesheet" href="{{asset('vendor/markdown/css/editormd.min.css')}}" />
 <script src="{{asset('vendor/markdown/js/editormd.min.js')}}"></script>
 <script src="{{asset('vendor/markdown/lib/marked.min.js')}}"></script>
 <script src="{{asset('vendor/markdown/lib/prettify.min.js')}}"></script>

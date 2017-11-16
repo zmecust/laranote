@@ -22,8 +22,14 @@
                         </select>
                     </div>
                     <div class="col-md-6 text-right">
-                        <button type="submit" class="btn"> 取消 </button>
-                        <button type="submit" class="btn btn-primary"> 保存 </button>
+                        <button type="submit" class="btn">
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                            取消
+                            </button>
+                        <button type="submit" class="btn btn-primary">
+                            <span class="glyphicon glyphicon-saved" aria-hidden="true"></span>
+                            保存
+                        </button>
                     </div>
                 </div>
             </div>
@@ -38,10 +44,10 @@
             </div>
 
             <div class="form-group{{ $errors->has('body') ? ' has-error' : '' }}">
-                <div id="test-editormd" style="width: 100%">
+                <div id="edit-editormd" style="width: 100%">
                     <textarea name="body" style="display:none">{{ $note->body }}</textarea>
                 </div>
-                @include('markdown::encode', ['editors' => ['test-editormd']])
+                @include('markdown::encode', ['editors' => ['edit-editormd']])
                 @if ($errors->has('body'))
                     <span class="help-block">
                         <strong>{{ $errors->first('body') }}</strong>

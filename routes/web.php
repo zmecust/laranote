@@ -14,3 +14,4 @@
 Route::get('/', 'Auth\LoginController@login');
 
 Route::resource('notes', 'NoteController');
+Route::resource('categories', 'CategoryController');

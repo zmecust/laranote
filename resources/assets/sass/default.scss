@@ -1,3 +1,27 @@
+html, body {
+	margin: 0;
+	background-color: #f4f4f4;
+}
+
+#container {
+	.left {
+		background-color: #fff;
+		position: absolute;
+		height: 100vh;
+		width: 70vh;
+		overflow-y: scroll
+	}
+	.right {
+		background-color: #fff;
+		position: absolute;
+		left: 70vh;
+		width: 132vh;
+		height: 100vh;
+		overflow-y: scroll
+	}
+	
+}
+
 .form-default {
 	margin-top: 30%;
 	.form {
@@ -24,5 +48,11 @@
 	border-bottom: 1px solid #ddd;
 	padding: 8px 2.2% 8px 2.2%;
 	margin: 0 -3% 0 -3%;
+	background-color: #fff;
+}
+
+.note-show {
+	border-bottom: 1px solid #ddd;
+	padding: 8px 1.8% 8px 0;
 	background-color: #fff;
 }
