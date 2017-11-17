@@ -13,5 +13,8 @@
 
 Route::get('/', 'Auth\LoginController@login');
 
-Route::resource('notes', 'NoteController');
-Route::resource('categories', 'CategoryController');
+// 前端 SPA 路由
+Route::any('{all}', function() {
+    return view('app');
+})->where(['all' => '(home|about|notes.*)']);
+

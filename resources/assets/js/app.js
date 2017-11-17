@@ -6,8 +6,7 @@
  */
 
 require('./bootstrap');
-
-
+import router from './router'
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -15,12 +14,12 @@ require('./bootstrap');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-ElementUI = require('element-ui');
+import Vue from 'vue'
+import ElementUI from 'element-ui'
+
 Vue.use(ElementUI);
 
-Vue.component('example', require('./components/Example.vue'));
-Vue.component('sidebar', require('./components/Sidebar.vue'));
-
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    router
 });

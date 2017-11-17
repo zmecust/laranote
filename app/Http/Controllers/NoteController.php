@@ -66,8 +66,9 @@ class NoteController extends Controller
      */
     public function show(Note $note)
     {
-        //$note->body = \MarkdownEditor::parse($note->body);
-        return view('note.show', compact('note'));
+        $note->body = \MarkdownEditor::parse($note->body);
+        //return view('note.show', compact('note'));
+        return $this->responseSuccess('Ok', $note->toArray());
     }
 
     /**

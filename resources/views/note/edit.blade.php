@@ -1,4 +1,4 @@
-@extends('app')
+@extends('note.master')
 @section('content')
     <div style="width: 96%; margin-left: 2%">
         <form class="form-horizontal" role="form" method="POST" action="/notes/{{ $note->id }}">
