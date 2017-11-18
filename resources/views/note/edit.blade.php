@@ -8,11 +8,17 @@
             <div class="form-group">
                 <div class="row note-create">
                     <div class="col-md-3 text-left">
-                        <select class="form-control" name="category" id="category" style="width: 100%" multiple="multiple">
+                        <el-select v-model="value" placeholder="请选择">
                             @foreach($categories as $category_id => $category_value)
+                                {{--<el-option>{{ $category_value }}</el-option>--}}
                                 <option value="{{ $category_id }}" selected="selected">{{ $category_value }}</option>
                             @endforeach
-                        </select>
+                        </el-select>
+                        {{--<select class="form-control" name="category" id="category" style="width: 100%" multiple="multiple">--}}
+                            {{--@foreach($categories as $category_id => $category_value)--}}
+                                {{--<option value="{{ $category_id }}" selected="selected">{{ $category_value }}</option>--}}
+                            {{--@endforeach--}}
+                        {{--</select>--}}
                     </div>
                     <div class="col-md-3 text-left">
                         <select class="form-control" name="tags[]" id="tag" multiple="multiple" style="width: 100%">
@@ -30,6 +36,9 @@
                             <span class="glyphicon glyphicon-saved" aria-hidden="true"></span>
                             保存
                         </button>
+                        <el-button type="danger" size="small" icon="el-icon-delete" onclick="destroy()">
+                            删除
+                        </el-button>
                     </div>
                 </div>
             </div>

@@ -1,14 +1,13 @@
 html, body {
 	margin: 0;
-	background-color: #f4f4f4;
+	background-color: #fff;
 }
 
 #container {
+	display: flex;
 	.left {
-		background-color: #fff;
-		position: absolute;
+		flex: 3;
 		height: 100vh;
-		width: 70vh;
 		overflow-y: scroll;
 		&::-webkit-scrollbar  
 		{
@@ -39,10 +38,7 @@ html, body {
 		}
 	}
 	.right {
-		background-color: #fff;
-		position: absolute;
-		left: 70vh;
-		width: 132vh;
+		flex: 7;
 		height: 100vh;
 		overflow-y: scroll;
 	}
@@ -82,4 +78,27 @@ html, body {
 	border-bottom: 1px solid #ddd;
 	padding: 8px 1.8% 8px 0;
 	background-color: #fff;
+	margin-bottom: 20px;
+}
+
+.sidebar-top {
+	background-color: #f4f4f4;
+	border-bottom: 1px solid #fff;
+	border-right: 1px solid #f4f4f4;
+	display: flex;
+	justify-content: space-between;
+	.button-collapse {
+		border: none;
+		border-left: 1px solid #ddd;
+		width: 60px;
+		background-color: #f4f4f4;
+		font-size: large;
+		font-weight: bold;
+		border-radius: 0;
+		&:hover,
+		&:focus,
+		&:active {
+			background-color: #f4f4f4;
+		}
+	}
 }

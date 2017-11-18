@@ -8,11 +8,30 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      component: require('./components/Sidebar'),
+      component: require('./components/Login'),
+    },
+    {
+      path: '/',
+      component: require('./components/Layout'),
       children: [
         {
-          path: 'notes/:id',
-          component: require('./components/note/Show')
+          path: 'notes/create',
+          component: require('./components/note/Create'),
+        },
+        {
+          path: '/',
+          component: require('./components/note/Index'),
+          children: [
+            {
+              path: 'home',
+              component: require('./components/Home')
+            },
+            {
+              path: 'notes/:id',
+              name: 'ShowNote',
+              component: require('./components/note/Show')
+            }
+          ]
         }
       ]
     },

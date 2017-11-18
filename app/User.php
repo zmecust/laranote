@@ -31,4 +31,14 @@ class User extends Authenticatable
     {
         return $this->attributes['password'] = \Hash::make($password);
     }
+
+    public function tags()
+    {
+        return $this->hasMany(Tag::class);
+    }
+
+    public function categories()
+    {
+        return $this->hasMany(Category::class);
+    }
 }

@@ -3,7 +3,7 @@
 namespace App\Repositories;
 
 use App\Tag;
-use Cache;
+use Auth;
 use App\Note;
 
 class NoteRepository
@@ -15,7 +15,7 @@ class NoteRepository
                 Tag::find($tag)->increment('notes_count');
                 return (int)$tag;
             }
-            $newTag = Tag::create(['name' => $tag, 'notes_count' => 1]);
+            $newTag = Tag::create(['name' => $tag, 'notes_count' => 1, 'user_id' => Auth::id()]);
             return $newTag->id;
         })->toArray();
     }

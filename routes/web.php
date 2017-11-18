@@ -17,4 +17,3 @@ Route::get('/', 'Auth\LoginController@login');
 Route::any('{all}', function() {
     return view('app');
 })->where(['all' => '(home|about|notes.*)']);
-

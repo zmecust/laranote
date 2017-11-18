@@ -15,6 +15,7 @@ class CreateTagsTable extends Migration
     {
         Schema::create('tags', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id')->unsigned()->index();
             $table->string('name')->index()->comment('名称');
             $table->string('description')->nullable()->comment('描述');
             $table->integer('notes_count')->default(0);

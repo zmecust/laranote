@@ -26,7 +26,11 @@ class NoteController extends Controller
      */
     public function index()
     {
-        //
+        Auth::loginUsingId(1);
+        $notes = Category::select('id', 'name')->with(['notes' => function ($query) {
+            $query->select('id', 'title', 'is_important', 'category_id', 'created_at')->where('user_id', Auth::id())->get();
+        }])->get();
+        return $this->responseSuccess('OK', $notes);
     }
 
     /**
@@ -43,6 +47,7 @@ class NoteController extends Controller
 
     public function store(NoteCreateRequest $request)
     {
+        //dd($request->all());
         Auth::loginUsingId(1);
         $tags = $this->noteRepository->createNotes($request->get('tags'));
         $data = [
@@ -66,7 +71,7 @@ class NoteController extends Controller
      */
     public function show(Note $note)
     {
-        $note->body = \MarkdownEditor::parse($note->body);
+        // $note->body = \MarkdownEditor::parse($note->body);
         //return view('note.show', compact('note'));
         return $this->responseSuccess('Ok', $note->toArray());
     }
@@ -100,6 +105,7 @@ class NoteController extends Controller
                     $note->tags()->create([
                         'name' => $addTag,
                         'articles_count' => 1,
+                        'user_id' => Auth::id()
                     ]);
                 } else {
                     $note->tags()->attach($addTag);

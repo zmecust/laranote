@@ -8350,17 +8350,104 @@ button.close {
   }
 }
 
+.sidebar-container > .el-menu {
+  width: 100% !important;
+  min-height: 100%;
+}
+
+.sidebar-container .svg-icon {
+  margin-right: 16px;
+}
+
+.hideSidebar .el-submenu > .el-submenu__title,
+.hideSidebar .submenu-title-noDropdown {
+  padding-left: 20px !important;
+}
+
+.hideSidebar .submenu-title-noDropdown span,
+.hideSidebar .submenu-title span,
+.hideSidebar .el-submenu > .el-submenu__title > span {
+  height: 0;
+  width: 0;
+  overflow: hidden;
+  visibility: hidden;
+  display: inline-block;
+}
+
+.hideSidebar .nest-menu .el-submenu__title {
+  text-align: initial !important;
+  padding-left: 20px !important;
+}
+
+.hideSidebar .nest-menu .el-submenu__title span {
+  height: auto;
+  width: auto;
+  visibility: visible;
+  display: inline;
+}
+
+.hideSidebar .nest-menu .el-submenu__title .el-submenu__icon-arrow {
+  display: block !important;
+}
+
+.hideSidebar .menu-wrapper > .el-menu-item,
+.hideSidebar .submenu-title-noDropdown,
+.hideSidebar .menu-wrapper > .el-submenu .el-submenu__title {
+  text-align: center;
+}
+
+.hideSidebar .el-menu-item .el-submenu__icon-arrow,
+.hideSidebar .el-submenu .el-submenu__title .el-submenu__icon-arrow {
+  display: none;
+}
+
+.hideSidebar .submenu-title-noDropdown {
+  position: relative;
+}
+
+.hideSidebar .submenu-title-noDropdown span {
+  -webkit-transition: opacity 0.3s cubic-bezier(0.55, 0, 0.1, 1);
+  transition: opacity 0.3s cubic-bezier(0.55, 0, 0.1, 1);
+  opacity: 0;
+}
+
+.hideSidebar .submenu-title-noDropdown:hover span {
+  display: block;
+  border-radius: 3px;
+  z-index: 1002;
+  width: 140px;
+  height: 56px;
+  visibility: visible;
+  position: absolute;
+  right: -145px;
+  text-align: left;
+  text-indent: 20px;
+  top: 0px;
+  background-color: #f4f4f4;
+  opacity: 1;
+}
+
+.el-submenu .el-menu-item {
+  min-width: 200px !important;
+}
+
 html,
 body {
   margin: 0;
-  background-color: #f4f4f4;
+  background-color: #fff;
+}
+
+#container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
 
 #container .left {
-  background-color: #fff;
-  position: absolute;
+  -webkit-box-flex: 3;
+      -ms-flex: 3;
+          flex: 3;
   height: 100vh;
-  width: 70vh;
   overflow-y: scroll;
   /*定义滚动条轨道 内阴影+圆角*/
   /*定义滑块 内阴影+圆角*/
@@ -8392,10 +8479,9 @@ body {
 }
 
 #container .right {
-  background-color: #fff;
-  position: absolute;
-  left: 70vh;
-  width: 132vh;
+  -webkit-box-flex: 7;
+      -ms-flex: 7;
+          flex: 7;
   height: 100vh;
   overflow-y: scroll;
 }
@@ -8436,5 +8522,34 @@ body {
   border-bottom: 1px solid #ddd;
   padding: 8px 1.8% 8px 0;
   background-color: #fff;
+  margin-bottom: 20px;
+}
+
+.sidebar-top {
+  background-color: #f4f4f4;
+  border-bottom: 1px solid #fff;
+  border-right: 1px solid #f4f4f4;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.sidebar-top .button-collapse {
+  border: none;
+  border-left: 1px solid #ddd;
+  width: 60px;
+  background-color: #f4f4f4;
+  font-size: large;
+  font-weight: bold;
+  border-radius: 0;
+}
+
+.sidebar-top .button-collapse:hover,
+.sidebar-top .button-collapse:focus,
+.sidebar-top .button-collapse:active {
+  background-color: #f4f4f4;
 }
 

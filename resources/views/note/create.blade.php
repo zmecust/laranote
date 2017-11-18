@@ -21,11 +21,11 @@
                         </select>
                     </div>
                     <div class="col-md-6 text-right">
-                        <button type="submit" class="btn">
+                        <button class="btn">
                             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                             取消
                         </button>
-                        <button type="submit" class="btn btn-primary">
+                        <button class="btn btn-primary">
                             <span class="glyphicon glyphicon-saved" aria-hidden="true"></span>
                             保存
                         </button>

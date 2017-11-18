@@ -18,4 +18,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::resource('notes', 'NoteController');
+Route::resource('tags', 'TagController');
 Route::resource('categories', 'CategoryController');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Tag;
+use Auth;
 use Illuminate\Http\Request;
 
 class TagController extends Controller
@@ -14,7 +15,9 @@ class TagController extends Controller
      */
     public function index()
     {
-        //
+        Auth::loginUsingId(1);
+        $tags = Auth::user()->tags()->get();
+        return $this->responseSuccess('OK', $tags->toArray());
     }
 
     /**

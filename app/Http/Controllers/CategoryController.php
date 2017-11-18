@@ -16,10 +16,8 @@ class CategoryController extends Controller
     public function index()
     {
         Auth::loginUsingId(1);
-        $notes = Category::select('id', 'name')->with(['notes' => function ($query) {
-            $query->select('id', 'title', 'is_important', 'category_id', 'created_at')->where('user_id', Auth::id())->get();
-        }])->get();
-        return $this->responseSuccess('OK', $notes);
+        $categories = Auth::user()->categories()->get();
+        return $this->responseSuccess('OK', $categories->toArray());
     }
 
     /**
