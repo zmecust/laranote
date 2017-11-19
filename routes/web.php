@@ -11,9 +11,11 @@
 |
 */
 
+// 登录
 Route::get('/', 'Auth\LoginController@login');
+Route::post('login', 'Auth\LoginController@show');
 
 // 前端 SPA 路由
 Route::any('{all}', function() {
     return view('app');
-})->where(['all' => '(home|about|notes.*)']);
+})->where(['all' => '.*']);

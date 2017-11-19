@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-cloak>
     <div class="sidebar-top submenu-title">
       <el-button class="button-collapse" :icon="isCollapse ? 'el-icon-d-arrow-right' : 'el-icon-d-arrow-left'" plain @click="active()"></el-button>
       <span>
@@ -14,12 +14,12 @@
             <i class="el-icon-tickets"></i>
             <span>笔记本</span>
           </template>
-          <el-submenu :index="category.name" v-for="category in categories" :key="category.id">
-            <template slot="title">{{ category.name }} (共 {{ category.notes.length }} 篇)</template>
-            <el-menu-item :index="'/notes/' + note.id" v-for="note in category.notes" :key="note.id">
-              {{ note.title }}
-            </el-menu-item>
-          </el-submenu>
+          <el-menu-item :index="'/categories/' + category.id" v-for="category in categories" :key="category.id">
+            <template slot="title">
+              <span>{{ category.name }}</span>
+              <span style="padding-left: 85%">{{ categories.length }}</span>
+            </template>
+          </el-menu-item>
         </el-submenu>
 
         <el-menu-item index="/trash" class='submenu-title-noDropdown'>
@@ -51,8 +51,7 @@ export default {
     }
   },
   mounted() {
-    console.log(this.$route.path);
-    axios.get('/api/notes').then(res => {
+    axios.get('/api/categories').then(res => {
       if (res.data.status) {
         this.categories = res.data.data;
       }

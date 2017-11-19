@@ -49,7 +49,8 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        //
+        $notes = $category->notes;
+        return $this->responseSuccess('OK', $notes);
     }
 
     /**

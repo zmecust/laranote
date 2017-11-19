@@ -15,23 +15,21 @@ const router = new Router({
       component: require('./components/Layout'),
       children: [
         {
+          path: 'home',
+          component: require('./components/Home'),
+        },
+        {
           path: 'notes/create',
           component: require('./components/note/Create'),
         },
         {
-          path: '/',
-          component: require('./components/note/Index'),
-          children: [
-            {
-              path: 'home',
-              component: require('./components/Home')
-            },
-            {
-              path: 'notes/:id',
-              name: 'ShowNote',
-              component: require('./components/note/Show')
-            }
-          ]
+          path: 'notes/:id/edit',
+          component: require('./components/note/Edit'),
+        },
+        {
+          path: 'categories/:id',
+          name: 'ShowNote',
+          component: require('./components/note/Index')
         }
       ]
     },

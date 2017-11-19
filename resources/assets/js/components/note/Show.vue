@@ -11,7 +11,7 @@
         <div>
             <div class="row" style="margin: 0 6px 30px 6px">
                 <div class="col-md-10">
-                    <span style="font-size: 30px; color: #333">{{note.title}}</span> <span style="font-size: 25px; color: #777; padding-left: 10px">{{note.created_at}}</span>
+                    <span style="font-size: 30px; color: #333">{{ note.title }}</span> <span style="font-size: 25px; color: #777; padding-left: 10px">{{ note.created_at }}</span>
                 </div>
                 <div class="col-md-2 text-right">
                     <el-button>
@@ -38,21 +38,21 @@
     },
     mounted() {
       this.reload();
-      $script(
-        [ `${this.editorPath}js/jquery.min.js` ], () => {
-          $script([`${this.editorPath}js/editormd.min.js`,
-          `${this.editorPath}lib/marked.min.js`,
-          `${this.editorPath}lib/prettify.min.js`], () => {
-            this.initEditor();
-          });
-        }
-      )
     },
     methods: {
       reload() {
         axios.get('/api/notes/' + this.$route.params.id).then((res) => {
           if (res.data.status) {
             this.note = res.data.data;
+            $script(
+              [ `${this.editorPath}js/jquery.min.js` ], () => {
+                $script([`${this.editorPath}js/editormd.min.js`,
+                  `${this.editorPath}lib/marked.min.js`,
+                  `${this.editorPath}lib/prettify.min.js`], () => {
+                  this.initEditor();
+                });
+              }
+            )
           }
         });
       },
@@ -74,7 +74,7 @@
         });
       },
       edit() {
-        window.location.href = `/edit/notes/${this.$route.params.id}`;
+        this.$router.push('/notes/' + this.$route.params.id + '/edit');
       },
       destroy() {
         this.$confirm('此操作将删除该笔记, 是否继续?', '提示', {
@@ -101,7 +101,7 @@
     },
     watch: {
       $route(to, from) {
-        this.reload();
+        //this.reload();
       }
     }
   }
