@@ -73,7 +73,7 @@ class NoteController extends Controller
     {
         // $note->body = \MarkdownEditor::parse($note->body);
         //return view('note.show', compact('note'));
-        return $this->responseSuccess('Ok', $note->toArray());
+        return $this->responseSuccess('Ok', Note::where('id', $note->id)->with('category', 'tags')->first());
     }
 
     /**
@@ -101,7 +101,7 @@ class NoteController extends Controller
         $note->update($data);
         if ($addTags = $this->noteRepository->editNotes($request->get('tags'), $note->id)) {
             foreach ($addTags as $addTag) {
-                if(! is_numeric($addTag)){
+                if (! is_numeric($addTag)) {
                     $note->tags()->create([
                         'name' => $addTag,
                         'articles_count' => 1,
@@ -113,7 +113,7 @@ class NoteController extends Controller
                 }
             }
         }
-        return redirect()->action('NoteController@show', ['id' => $note->id]);
+        return $this->responseSuccess('OK');
     }
 
     /**
@@ -124,6 +124,11 @@ class NoteController extends Controller
      */
     public function destroy(Note $note)
     {
-        //
+        $note->delete();
+        if ($note->trashed()) {
+            return $this->responseSuccess('删除用户信息成功');
+        } else {
+            return $this->responseError('删除用户信息失败');
+        }
     }
 }

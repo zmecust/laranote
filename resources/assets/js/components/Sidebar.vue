@@ -6,8 +6,7 @@
         <el-button icon="el-icon-plus" type="success" @click="create()"></el-button>
       </span>
     </div>
-    <el-menu :default-active="$route.path" class="el-menu-vertical-demo" :collapse="isCollapse" router mode="vertical"
-             background-color="#f4f4f4" text-color="#555" active-text-color="#20c997">
+    <el-menu :default-active="$route.path" class="el-menu-vertical-demo" :collapse="isCollapse" router mode="vertical" background-color="#f4f4f4" text-color="#555" active-text-color="#20c997">
       <div class='menu-wrapper'>
         <el-submenu index="11">
           <template slot="title">

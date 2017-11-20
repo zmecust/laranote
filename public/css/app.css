@@ -8437,6 +8437,17 @@ body {
   background-color: #fff;
 }
 
+input,
+button,
+select,
+textarea {
+  outline: none;
+}
+
+button:hover {
+  color: #20c997;
+}
+
 #container {
   display: -webkit-box;
   display: -ms-flexbox;

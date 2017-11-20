@@ -29,7 +29,7 @@ const router = new Router({
         {
           path: 'categories/:id',
           name: 'ShowNote',
-          component: require('./components/note/Index')
+          component: require('./components/note/Show')
         }
       ]
     },

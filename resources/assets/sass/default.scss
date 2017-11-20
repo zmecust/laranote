@@ -3,6 +3,14 @@ html, body {
 	background-color: #fff;
 }
 
+input, button, select, textarea {
+	outline:none;
+}
+
+button:hover {
+	color: #20c997;
+}
+
 // 布局
 #container {
 	display: flex;

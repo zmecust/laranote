@@ -5,9 +5,17 @@ namespace App\Http\Controllers;
 use App\Category;
 use Auth;
 use Illuminate\Http\Request;
+use App\Transform\NoteTransformer;
 
 class CategoryController extends Controller
 {
+    private $noteTransformer;
+
+    public function __construct(NoteTransformer $noteTransformer)
+    {
+        $this->noteTransformer = $noteTransformer;
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -49,8 +57,8 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        $notes = $category->notes;
-        return $this->responseSuccess('OK', $notes);
+        $notes = $category->notes->toArray();
+        return $this->responseSuccess('OK', $this->noteTransformer->transformCollection($notes));
     }
 
     /**

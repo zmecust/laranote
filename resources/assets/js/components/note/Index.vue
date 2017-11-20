@@ -1,125 +1,128 @@
 <template>
-    <div id="container">
-        <div class="left">
-            <category-index @show="show"></category-index>
-        </div>
-
-        <div class="right">
-            <div class="col-md-12 text-right note-show" v-show="note">
-                <el-button type="success" size="small" icon="el-icon-edit" plain @click="edit()">
-                    编辑
-                </el-button>
-                <el-button type="danger" size="small" icon="el-icon-delete" @click="destroy()">
-                    删除
-                </el-button>
-            </div>
-            <div v-show="note">
-                <div class="row" style="margin: 0 6px 30px 6px">
-                    <div class="col-md-10">
-                        <span style="font-size: 30px; color: #333">{{ note.title }}</span> <span style="font-size: 25px; color: #777; padding-left: 10px">{{ note.created_at }}</span>
-                    </div>
-                    <div class="col-md-2 text-right">
-                        <el-button>
-                            <span style="font-size: 30px"><i :class="[note.is_important == 'T' ? 'el-icon-star-on' : 'el-icon-star-off']"></i></span>
-                        </el-button>
-                    </div>
-                </div>
-                <!--<div class="markdown-body editormd-html-preview" style="padding: 0 20px 20px 20px;" v-html="note.body"></div>-->
-                <div id="editor" style="width: 100%">
-                    <textarea id="body1" style="display:none">{{ note.body }}</textarea>
-                </div>
-            </div>
-        </div>
+  <div class="left">
+    <div style="border-bottom: 1px solid #ddd; padding-bottom: 2px">
+      <el-input placeholder="请输入内容" prefix-icon="el-icon-search" v-model="search">
+      </el-input>
     </div>
+    <div>
+      <div v-for="(note, index) in notes">
+        <div @click="change(index)" class="btn-note-list">
+          <div class="item1">
+            <h4>{{ note.title }}</h4>
+            <p>{{ note.created_at }}</p>
+          </div>
+          <div class="item2">
+            <el-button icon="el-icon-delete" plain @click="destroy(index, note.id)"></el-button>
+            <el-button icon="el-icon-star-off" plain @click="like(index, note.id)"></el-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-  import CategoryIndex from '../category/Index';
-  import $script from "scriptjs";
 
-  export default {
-    data() {
-      return {
-        note: '',
-        instance: '',
-        editorPath: '../../../../../vendor/markdown/',
+export default {
+  data() {
+    return {
+      search: '',
+      notes: ''
+    }
+  },
+  mounted() {
+    axios.get('/api/categories/' + this.$route.params.id).then(res => {
+      if (res.data.status) {
+        this.notes = res.data.data;
       }
+    });
+  },
+  methods: {
+    change(index) {
+      this.$store.commit('NOTE', this.notes[index]);
     },
-    components: {
-      CategoryIndex
-    },
-    mounted() {
-      this.reload();
-    },
-    methods: {
-      reload() {
-        //document.getElementById("body1").value = this.note.body;
-        $script(
-          [ `${this.editorPath}js/jquery.min.js` ], () => {
-            $script([`${this.editorPath}js/editormd.min.js`,
-              `${this.editorPath}lib/marked.min.js`,
-              `${this.editorPath}lib/prettify.min.js`], () => {
-              this.initEditor();
-            });
-          }
-        )
-      },
-      initEditor() {
-        this.$nextTick((editorMD = window.editormd) => {
-          if (editorMD) {
-            // Vue 异步执行 DOM 更新，template 里面的 script 标签异步创建
-            // 所以，只能在 nextTick 里面初始化 editor.md
-            this.instance = editorMD.markdownToHTML('editor', {
-              htmlDecode: "style,script,iframe",
-              emoji: false,
-              taskList: true,
-              tex: false, // 默认不解析
-              flowChart: false, // 默认不解析
-              sequenceDiagram: false, // 默认不解析
-              codeFold: true,
+    destroy(index, id) {
+      this.$confirm('此操作将删除该笔记, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        axios.delete('/api/notes/' + id).then((res) => {
+          if (res.data.status) {
+            this.notes.splice(index, 1);
+            this.$message({
+              type: 'success',
+              message: '删除成功!'
             });
           }
         });
-      },
-      edit() {
-        this.$router.push('/notes/' + this.$route.params.id + '/edit');
-      },
-      destroy() {
-        this.$confirm('此操作将删除该笔记, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          axios.delete('/api/notes/' + this.$route.params.id).then((res) => {
-            if (res.data.status) {
-              this.$router.push('/home');
-              this.$message({
-                type: 'success',
-                message: '删除成功!'
-              });
-            }
-          });
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消删除'
-          });
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
         });
-      },
-      show(note) {
-        this.note = note;
-      }
+      });
     },
-    watch: {
-      note: function(val) {
-        if (val !== null) {
-          this.reload();
-        }
+    like(index, id) {
+      
+    }
+  }
+}
+</script>
+
+<style lang="scss">
+.btn-note-list {
+  padding: 0 10px 0 10px;
+	display: flex;
+	justify-content: space-between;
+	border-bottom: 1px solid #ddd;
+	width: 100%;
+	height: 56px;
+	background-color: #fff;
+	&:hover {
+		background: #f4f4f4;
+    border-bottom: 1px solid #ddd;
+    color: #20c997;
+    .item2 {
+      display: block;
+    }
+  }
+	&:active {
+		background: #f4f4f4;
+    border-bottom: 1px solid #ddd;
+    color: #20c997;
+  }
+  .item1 {
+    align-self: flex-start;
+    height: 55px;
+    text-align: left;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    h4 {
+      font-size: 15px;
+      line-height: 8px;
+    }
+    p {
+      font-size: 13px;
+      color: #999;
+    }
+  }
+  .item2 {
+    align-self: center;
+    display: none;
+    button {
+      font-size: large;
+      padding: 0;
+	    border: none;
+      border-radius: 0;
+      background: #f4f4f4;
+      &:hover,
+      &:active {
+        background-color: #f4f4f4;
       }
     }
   }
-</script>
-
-<style>
-    @import "../../../../../public/vendor/markdown/css/editormd.min.css";
+}
 </style>

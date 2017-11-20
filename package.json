@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "scriptjs": "^2.5.8",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vuex": "^3.0.1"
   }
 }
