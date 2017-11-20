@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LoginRequest;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Auth;
 
 class LoginController extends Controller
 {
@@ -42,8 +44,17 @@ class LoginController extends Controller
         return view('user.login');
     }
 
-    public function show()
+    public function show(LoginRequest $request)
     {
-        return redirect('/home');
+        $field = filter_var($request->get('login'), FILTER_VALIDATE_EMAIL) ? 'email' : 'name';
+        if (Auth::attempt([
+            $field => $request->get('login'),
+            'password' => $request->get('password'),
+        ])) {
+            return redirect('/home');
+        } else {
+            \Session::flash('user_login_failed','用户不存在或密码不正确');
+            return redirect('/');
+        }
     }
 }
