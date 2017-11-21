@@ -8,15 +8,11 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      component: require('./components/Login'),
-    },
-    {
-      path: '/',
       component: require('./components/Layout'),
       children: [
         {
           path: 'home',
-          component: require('./components/Home'),
+          component: require('./components/home/Index'),
         },
         {
           path: 'notes/create',
@@ -29,6 +25,14 @@ const router = new Router({
         {
           path: 'categories/:id',
           name: 'ShowNote',
+          component: require('./components/note/Show')
+        },
+        {
+          path: 'important',
+          component: require('./components/note/Show')
+        },
+        {
+          path: 'trash',
           component: require('./components/note/Show')
         }
       ]

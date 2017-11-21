@@ -8,15 +8,20 @@ use App\Category;
 use Auth;
 use Illuminate\Http\Request;
 use App\Repositories\NoteRepository;
+use App\Http\Resources\NoteCollection;
+use App\Transform\ImportantTransformer;
 use App\Http\Requests\NoteCreateRequest;
 
 class NoteController extends Controller
 {
     private $noteRepository;
+
+    private $importantTransformer;
     
-    public function __construct(NoteRepository $noteRepository)
+    public function __construct(ImportantTransformer $importantTransformer, NoteRepository $noteRepository)
     {
         $this->noteRepository = $noteRepository;
+        $this->importantTransformer = $importantTransformer;
     }
     
     /**
@@ -72,7 +77,7 @@ class NoteController extends Controller
     public function show(Note $note)
     {
         // $note->body = \MarkdownEditor::parse($note->body);
-        //return view('note.show', compact('note'));
+        // return view('note.show', compact('note'));
         return $this->responseSuccess('Ok', Note::where('id', $note->id)->with('category', 'tags')->first());
     }
 
@@ -130,5 +135,17 @@ class NoteController extends Controller
         } else {
             return $this->responseError('删除用户信息失败');
         }
+    }
+
+    public function important()
+    {
+        $notes = Note::where('is_important', 'T')->with('category', 'tags')->get();
+        return $this->responseSuccess('Ok', $this->importantTransformer->transformCollection($notes->toArray()));
+    }
+
+    public function trash()
+    {
+        $notes = Note::onlyTrashed()->with('category', 'tags')->get();
+        return $this->responseSuccess('Ok', $this->importantTransformer->transformCollection($notes->toArray()));
     }
 }

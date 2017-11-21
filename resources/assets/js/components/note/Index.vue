@@ -27,11 +27,13 @@ export default {
   data() {
     return {
       search: '',
-      notes: ''
+      notes: '',
+      uri: '',
     }
   },
   mounted() {
-    axios.get('/api/categories/' + this.$route.params.id).then(res => {
+    this.uri = this.$route.path;
+    axios.get('/api' + this.uri).then(res => {
       if (res.data.status) {
         this.notes = res.data.data;
       }
@@ -64,7 +66,7 @@ export default {
       });
     },
     like(index, id) {
-      
+
     }
   }
 }
@@ -73,24 +75,22 @@ export default {
 <style lang="scss">
 .btn-note-list {
   padding: 0 10px 0 10px;
-	display: flex;
-	justify-content: space-between;
-	border-bottom: 1px solid #ddd;
-	width: 100%;
-	height: 56px;
-	background-color: #fff;
-	&:hover {
-		background: #f4f4f4;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #ddd;
+  width: 100%;
+  height: 56px;
+  background-color: #fff;
+  &:hover,
+  &:focus,
+  &:hover:active,
+  &:active {
+    background: #f4f4f4;
     border-bottom: 1px solid #ddd;
     color: #20c997;
     .item2 {
       display: block;
     }
-  }
-	&:active {
-		background: #f4f4f4;
-    border-bottom: 1px solid #ddd;
-    color: #20c997;
   }
   .item1 {
     align-self: flex-start;
@@ -115,7 +115,7 @@ export default {
     button {
       font-size: large;
       padding: 0;
-	    border: none;
+      border: none;
       border-radius: 0;
       background: #f4f4f4;
       &:hover,

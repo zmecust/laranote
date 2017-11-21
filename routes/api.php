@@ -13,10 +13,9 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::resource('notes', 'NoteController');
 Route::resource('tags', 'TagController');
 Route::resource('categories', 'CategoryController');
+
+Route::get('trash', 'NoteController@trash');
+Route::get('important', 'NoteController@important');
