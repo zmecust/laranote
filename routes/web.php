@@ -12,7 +12,7 @@
 */
 
 // 登录
-Route::get('/', 'Auth\LoginController@login');
+Route::get('/', 'Auth\LoginController@login')->name('login');
 Route::post('/', 'Auth\LoginController@show');
 
 // 前端 SPA 路由

@@ -1,8 +1,6 @@
 <template>
   <div id="container" v-cloak>
-    <div class="left">
-      <category-index></category-index>
-    </div>
+    <category-index></category-index>
 
     <div class="right">
       <div class="col-md-12 text-right note-show" v-show="note">

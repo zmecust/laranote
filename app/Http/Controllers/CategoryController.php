@@ -23,7 +23,6 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        Auth::loginUsingId(1);
         $categories = Auth::user()->categories()->get();
         return $this->responseSuccess('OK', $categories->toArray());
     }

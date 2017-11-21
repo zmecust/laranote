@@ -31,7 +31,6 @@ class NoteController extends Controller
      */
     public function index()
     {
-        Auth::loginUsingId(1);
         $notes = Category::select('id', 'name')->with(['notes' => function ($query) {
             $query->select('id', 'title', 'is_important', 'category_id', 'created_at')->where('user_id', Auth::id())->get();
         }])->get();
@@ -52,8 +51,6 @@ class NoteController extends Controller
 
     public function store(NoteCreateRequest $request)
     {
-        //dd($request->all());
-        Auth::loginUsingId(1);
         $tags = $this->noteRepository->createNotes($request->get('tags'));
         $data = [
             'title' => $request->get('title'),
@@ -96,7 +93,6 @@ class NoteController extends Controller
 
     public function update(NoteCreateRequest $request, Note $note)
     {
-        Auth::loginUsingId(1);
         $data = [
             'title' => $request->get('title'),
             'category_id' => $request->get('category'),

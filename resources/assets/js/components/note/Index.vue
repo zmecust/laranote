@@ -5,7 +5,7 @@
       </el-input>
     </div>
     <div>
-      <div v-for="(note, index) in notes">
+      <div v-for="(note, index) in notes" class="note-list">
         <div @click="change(index)" class="btn-note-list">
           <div class="item1">
             <h4>{{ note.title }}</h4>
@@ -41,6 +41,8 @@ export default {
   },
   methods: {
     change(index) {
+      $('.note-list > div').css('color', '#666');
+      $('.note-list').children(`div:eq(${index})`).css('color', '#20c997');
       this.$store.commit('NOTE', this.notes[index]);
     },
     destroy(index, id) {
@@ -81,11 +83,10 @@ export default {
   width: 100%;
   height: 56px;
   background-color: #fff;
+  cursor: pointer;
   &:hover,
-  &:focus,
-  &:hover:active,
   &:active {
-    background: #f4f4f4;
+    background-color: #f4f4f4;
     border-bottom: 1px solid #ddd;
     color: #20c997;
     .item2 {

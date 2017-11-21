@@ -39,7 +39,7 @@ export default {
             },
             imageUpload: true,
             imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
-            imageUploadURL: "markdown/upload",
+            imageUploadURL: "/markdown/upload",
             emoji: true
           });
         }

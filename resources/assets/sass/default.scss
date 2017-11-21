@@ -20,28 +20,28 @@ button:hover {
 		overflow-y: scroll;
 		&::-webkit-scrollbar
 		{
-			width: 5px;  
+			width: 8px;  
 			height: 10px;  
 			background-color: #f4f4f4;  
 		}  
 		/*定义滚动条轨道 内阴影+圆角*/  
 		&::-webkit-scrollbar-track  
 		{  
-			-webkit-box-shadow: inset 0 0 3px rgba(0,0,0,0.3);  
-			border-radius: 10px;  
-			background-color: #f4f4f4;  
-		}    
+			-webkit-box-shadow: inset 0 0 3px rgba(0,0,0,0.1);
+			border-radius: 8px;
+			background-color: #f4f4f4;
+		}
 		/*定义滑块 内阴影+圆角*/  
 		&::-webkit-scrollbar-thumb  
 		{  
-			border-radius: 10px;  
+			border-radius: 8px;  
 			-webkit-box-shadow: inset 0 0 2px rgba(0,0,0,.3);
-			background-color: #bdbdbd;  
+			background-color: #ddd;
 		}  
 		/*滑块效果*/
 		&::-webkit-scrollbar-thumb:hover
 		{
-		border-radius: 5px;
+		border-radius: 8px;
 		-webkit-box-shadow: inset 0 0 3px rgba(0,0,0,0.2);
 		background: rgba(0,0,0,0.4);
 		}
