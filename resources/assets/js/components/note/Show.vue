@@ -18,7 +18,7 @@
             <span style="font-size: 25px; color: #777; padding-left: 10px">{{ note.created_at }}</span>
           </div>
           <div class="col-md-2 text-right">
-            <el-button style="padding: 0">
+            <el-button class="btn-important" @click="important()">
               <span style="font-size: 30px;">
                 <i :class="[note.is_important == 'T' ? 'el-icon-star-on' : 'el-icon-star-off']"></i>
               </span>
@@ -67,6 +67,13 @@ export default {
           message: '已取消删除'
         });
       });
+    },
+    important() {
+      axios.get('/api/change_important/' + this.note.id).then((res) => {
+        if (res.data.status) {
+          this.note.is_important == 'T' ? this.note.is_important = 'F' : this.note.is_important = 'T'
+        }
+      });
     }
   }
 }
@@ -75,5 +82,11 @@ export default {
 <style>
 [v-cloak] {
   display: none;
+}
+
+.btn-important {
+  padding: 0;
+  border: none;
+  border-radius: 0;
 }
 </style>

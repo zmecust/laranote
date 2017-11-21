@@ -19,3 +19,4 @@ Route::resource('categories', 'CategoryController');
 
 Route::get('trash', 'NoteController@trash');
 Route::get('important', 'NoteController@important');
+Route::get('change_important/{id}', 'NoteController@changeImportant');

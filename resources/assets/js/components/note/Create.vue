@@ -5,7 +5,7 @@
       <div class="form-group">
         <div class="row note-create">
           <div class="col-md-3 text-left">
-            <el-select v-model="category" placeholder="请选择笔记类别" style="width: 100%">
+            <el-select v-model="category" placeholder="请选择笔记类别" filterable allow-create style="width: 100%">
               <el-option v-for="item in categories" :key="item.id" :label="item.name" :value="item.id">
               </el-option>
             </el-select>
@@ -110,7 +110,7 @@ export default {
       }
       axios.post('/api/notes', data).then((res) => {
         if (res.data.status) {
-          this.$router.push({ name: 'ShowNote', params: { id: res.data.data.id } });
+          this.$router.go(-1);
         }
       });
     }

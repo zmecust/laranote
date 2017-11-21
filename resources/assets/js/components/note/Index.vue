@@ -13,7 +13,9 @@
           </div>
           <div class="item2">
             <el-button icon="el-icon-delete" plain @click="destroy(index, note.id)"></el-button>
-            <el-button icon="el-icon-star-off" plain @click="like(index, note.id)"></el-button>
+            <el-button plain @click="important(index, note.id)">
+              <i :class="[notes[index].is_important == 'T' ? 'el-icon-star-on' : 'el-icon-star-off']"></i>
+            </el-button>
           </div>
         </div>
       </div>
@@ -67,8 +69,12 @@ export default {
         });
       });
     },
-    like(index, id) {
-
+    important(index, id) {
+      axios.get('/api/change_important/' + id).then((res) => {
+        if (res.data.status) {
+          this.notes[index].is_important == 'T' ? this.notes[index].is_important = 'F' : this.notes[index].is_important = 'T'
+        }
+      });
     }
   }
 }

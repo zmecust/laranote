@@ -51,15 +51,15 @@ class NoteController extends Controller
 
     public function store(NoteCreateRequest $request)
     {
+        $category = $this->noteRepository->createCategory($request->get('category'));
         $tags = $this->noteRepository->createNotes($request->get('tags'));
         $data = [
             'title' => $request->get('title'),
-            'category_id' => $request->get('category'),
+            'category_id' => $category,
             'body' => $request->get('body'),
             'user_id' => Auth::id()
         ];
         $note = Note::create($data);
-        Category::find($request->get('category'))->increment('notes_count');
         Auth::user()->increment('notes_count');
         $note->tags()->attach($tags);
         return redirect()->action('NoteController@show', ['id' => $note->id]);
@@ -143,5 +143,21 @@ class NoteController extends Controller
     {
         $notes = Note::onlyTrashed()->with('category', 'tags')->get();
         return $this->responseSuccess('Ok', $this->importantTransformer->transformCollection($notes->toArray()));
+    }
+
+    public function changeImportant($id)
+    {
+        $note = Note::find($id);
+        if (empty($note)) {
+            return $this->responseError('not found this note');
+        }
+        if ($note->is_important == 'T') {
+            $note->is_important = 'F';
+            $note->save();
+        } else {
+            $note->is_important = 'T';
+            $note->save();
+        }
+        return $this->responseSuccess('OK');
     }
 }

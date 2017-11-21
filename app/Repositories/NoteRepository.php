@@ -3,11 +3,22 @@
 namespace App\Repositories;
 
 use App\Tag;
+use App\Category;
 use Auth;
 use App\Note;
 
 class NoteRepository
 {
+    public function createCategory($category)
+    {
+        if (is_numeric($category)) {
+            Category::find($category)->increment('notes_count');
+            return (int)$category;
+        }
+        $newCategory = Category::create(['name' => $category, 'notes_count' => 1, 'user_id' => Auth::id()]);
+        return $newCategory->id;
+    }
+
     public function createNotes($tags)
     {
         return collect($tags)->map(function ($tag) {
