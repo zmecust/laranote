@@ -32,8 +32,8 @@
       </div>
 
       <div class="form-group">
-        <div id="editor-md" style="width: 100%">
-          <textarea id="body" name="body" style="display:none"></textarea>
+        <div id="editor" style="width: 100%">
+          <textarea id="create-body" name="body" style="display:none"></textarea>
         </div>
       </div>
     </form>
@@ -79,7 +79,7 @@ export default {
         if (editorMD) {
           // Vue 异步执行 DOM 更新，template 里面的 script 标签异步创建
           // 所以，只能在 nextTick 里面初始化 editor.md
-          editorMD("editor-md", {
+          editorMD("editor", {
             width: "100%",
             height: 750,
             markdown: "",
@@ -104,7 +104,7 @@ export default {
     create() {
       let data = {
         title: this.title,
-        body: document.querySelector('#body').value,
+        body: document.querySelector('#create-body').value,
         category: this.category,
         tags: this.tag
       }
