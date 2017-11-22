@@ -117,3 +117,7 @@ export default {
   }
 }
 </script>
+
+<style>
+  @import '../../../../../public/vendor/markdown/css/editormd.min.css';
+</style>
