@@ -33,7 +33,7 @@
 
       <div class="form-group">
         <div id="editor-md" style="width: 100%">
-          <textarea id="body" name="body" style="display:none"><%= note.body %></textarea>
+          <textarea id="body" name="body" style="display:none" v-model="note.body"></textarea>
         </div>
       </div>
     </form>
@@ -128,7 +128,3 @@ export default {
   }
 }
 </script>
-
-<style>
-@import "../../../../../public/vendor/markdown/css/editormd.min.css";
-</style>

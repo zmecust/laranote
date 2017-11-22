@@ -19,9 +19,11 @@
             <span>笔记本</span>
           </template>
           <el-menu-item :index="'/categories/' + category.id" v-for="category in categories" :key="category.id">
-            <template slot="title" style="dispaly: flex; justify-items: ">
-              <span>{{ category.name }}</span>
-              <span style="padding-right: 2%">{{ category.notes_count }}</span>
+            <template slot="title">
+              <div style="display: flex; justify-content: space-between;">
+                <div>{{ category.name }}</div>
+                <div>{{ category.notes_count }}</div>
+              </div>
             </template>
           </el-menu-item>
         </el-submenu>

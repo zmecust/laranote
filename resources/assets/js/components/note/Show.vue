@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import $script from "scriptjs";
 import CategoryIndex from './Index';
 import routeData from '../../libs/route-data';
 import { mapState } from 'vuex';
@@ -79,7 +80,9 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+@import '../../../../../public/css/markdown.css';
+
 [v-cloak] {
   display: none;
 }
