@@ -33,7 +33,7 @@
 
       <div class="form-group">
         <div id="editor-md" style="width: 100%">
-          <textarea id="body" name="body" style="display:none" v-model="note.body"></textarea>
+          <textarea id="body" name="body" style="display:none"></textarea>
         </div>
       </div>
     </form>
@@ -69,23 +69,23 @@ export default {
                 for (let index in this.note.tags) {
                   this.tag.push(this.note.tags[index].id);
                 }
-                
+                $script(
+                  [`${this.editorPath}js/jquery.min.js`], () => {
+                    $script(`${this.editorPath}js/editormd.min.js`, () => {
+                      this.initEditor();
+                    });
+                  }
+                )
               }
             });
           }
         });
       }
     });
-    $script(
-      [`${this.editorPath}js/jquery.min.js`], () => {
-        $script(`${this.editorPath}js/editormd.min.js`, () => {
-          this.initEditor();
-        });
-      }
-    )
   },
   methods: {
     initEditor() {
+      document.querySelector('#body').value = this.note.body;
       this.$nextTick((editorMD = window.editormd) => {
         if (editorMD) {
           // Vue 异步执行 DOM 更新，template 里面的 script 标签异步创建
