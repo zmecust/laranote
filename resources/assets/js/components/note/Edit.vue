@@ -33,7 +33,7 @@
 
       <div class="form-group">
         <div id="editor-md" style="width: 100%">
-          <textarea id="body" name="body" style="display:none">{{ note.body }}</textarea>
+          <textarea id="body" name="body" style="display:none"><%= note.body %></textarea>
         </div>
       </div>
     </form>
