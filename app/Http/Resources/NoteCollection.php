@@ -18,4 +18,5 @@ class NoteCollection extends ResourceCollection
             'data' => $this->collection()
         ];
     }
+    
 }

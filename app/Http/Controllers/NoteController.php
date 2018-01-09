@@ -135,13 +135,13 @@ class NoteController extends Controller
 
     public function important()
     {
-        $notes = Note::where('is_important', 'T')->with('category', 'tags')->get();
+        $notes = Note::where('is_important', 'T')->where('user_id', Auth::id())->with('category', 'tags')->get();
         return $this->responseSuccess('Ok', $this->importantTransformer->transformCollection($notes->toArray()));
     }
 
     public function trash()
     {
-        $notes = Note::onlyTrashed()->with('category', 'tags')->get();
+        $notes = Note::onlyTrashed()->where('user_id', Auth::id())->with('category', 'tags')->get();
         return $this->responseSuccess('Ok', $this->importantTransformer->transformCollection($notes->toArray()));
     }
 
