@@ -127,10 +127,12 @@ class NoteController extends Controller
     {
         $note->delete();
         if ($note->trashed()) {
+            if ($note->category->notes_count > 0) {
+                $note->category->decrement('notes_count');
+            }
             return $this->responseSuccess('删除用户信息成功');
-        } else {
-            return $this->responseError('删除用户信息失败');
         }
+        return $this->responseError('删除用户信息失败');
     }
 
     public function important()
@@ -159,5 +161,39 @@ class NoteController extends Controller
             $note->save();
         }
         return $this->responseSuccess('OK');
+    }
+
+    public function getCount()
+    {
+        $data = [
+            'trash_count' => Note::where('user_id', Auth::id())->onlyTrashed()->get()->count(),
+            'important_count' => Note::where(['is_important' => 'T', 'user_id' => Auth::id()])->get()->count()
+        ];
+        return $this->responseSuccess('OK', $data);
+    }
+
+    public function untrash($id)
+    {
+        Note::where('id', $id)->restore();
+        Note::find($id)->category->increment('notes_count');
+        return $this->responseSuccess('OK');
+    }
+
+    public function trashForever($id)
+    {
+        $note = Note::withTrashed()->find($id);
+        if ($note) {
+            \DB::transaction(function () use ($note) {
+                $category = $note->category;
+                $category->decrement('notes_count');
+                    if ($category->notes_count <= 0) {
+                        $category->delete();
+                    }
+                $note->user->decrement('notes_count');
+                $note->forceDelete();
+            });
+            return $this->responseSuccess('OK');
+        }
+        return $this->responseError('删除失败');
     }
 }

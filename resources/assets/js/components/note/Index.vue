@@ -13,7 +13,8 @@
           </div>
           <div class="item2">
             <el-button icon="el-icon-delete" plain @click="destroy(index, note.id)"></el-button>
-            <el-button plain @click="important(index, note.id)">
+            <el-button v-if="uri === '/trash'" icon="el-icon-back" plain @click="untrash(note.id)"></el-button>
+            <el-button v-else plain @click="important(index, note.id)">
               <i :class="[notes[index].is_important == 'T' ? 'el-icon-star-on' : 'el-icon-star-off']"></i>
             </el-button>
           </div>
@@ -35,13 +36,16 @@ export default {
   },
   mounted() {
     this.uri = this.$route.path;
-    axios.get('/api' + this.uri).then(res => {
-      if (res.data.status) {
-        this.notes = res.data.data;
-      }
-    });
+    this.get();
   },
   methods: {
+    get() {
+      axios.get('/api' + this.uri).then(res => {
+        if (res.data.status) {
+          this.notes = res.data.data;
+        }
+      });
+    },
     change(index) {
       $('.note-list > div').css('color', '#666');
       $('.note-list').children(`div:eq(${index})`).css('color', '#20c997');
@@ -53,15 +57,27 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        axios.delete('/api/notes/' + id).then((res) => {
-          if (res.data.status) {
-            this.notes.splice(index, 1);
-            this.$message({
-              type: 'success',
-              message: '删除成功!'
-            });
-          }
-        });
+        if (this.uri !== '/trash') {
+          axios.delete('/api/notes/' + id).then((res) => {
+            if (res.data.status) {
+              this.notes.splice(index, 1);
+              this.$message({
+                type: 'success',
+                message: '删除成功!'
+              });
+            }
+          });
+        } else {
+          axios.delete('/api/trash/' + id).then((res) => {
+            if (res.data.status) {
+              this.$message({
+                type: 'success',
+                message: '删除成功!'
+              });
+              this.get();
+            }
+          });
+        }
       }).catch(() => {
         this.$message({
           type: 'info',
@@ -73,6 +89,22 @@ export default {
       axios.get('/api/change_important/' + id).then((res) => {
         if (res.data.status) {
           this.notes[index].is_important == 'T' ? this.notes[index].is_important = 'F' : this.notes[index].is_important = 'T'
+        }
+      });
+    },
+    untrash(id) {
+      axios.put('/api/untrash/' + id).then((res) => {
+        if (res.data.status) {
+          this.$message({
+            type: 'success',
+            message: '恢复成功!'
+          });
+          this.get();
+        } else {
+          this.$message({
+            type: 'info',
+            message: '恢复失败!'
+          });
         }
       });
     }

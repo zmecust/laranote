@@ -31,11 +31,13 @@
         <el-menu-item index="/trash" class='submenu-title-noDropdown'>
           <i class="el-icon-delete"></i>
           <span>废纸篓</span>
+          <span style="padding-left: 30%">{{ counts.trash_count }}</span>
         </el-menu-item>
 
         <el-menu-item index="/important" class='submenu-title-noDropdown'>
           <i class="el-icon-star-on"></i>
           <span>我的收藏</span>
+          <span style="padding-left: 21%">{{ counts.important_count }}</span>
         </el-menu-item>
 
         <el-menu-item index="/setting" class='submenu-title-noDropdown'>
@@ -53,6 +55,7 @@ export default {
   data() {
     return {
       categories: '',
+      counts: '',
       isCollapse: false
     }
   },
@@ -60,6 +63,11 @@ export default {
     axios.get('/api/categories').then(res => {
       if (res.data.status) {
         this.categories = res.data.data;
+      }
+    });
+    axios.get('/api/get_count').then(res => {
+      if (res.data.status) {
+        this.counts = res.data.data;
       }
     });
   },

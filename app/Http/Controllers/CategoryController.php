@@ -23,8 +23,17 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Auth::user()->categories()->get();
-        return $this->responseSuccess('OK', $categories->toArray());
+        $categories = Auth::user()->categories()->get()->toArray();
+        $categories = array_map(function ($category) {
+            if ($category['notes_count'] > 0) {
+              return [
+                'id' => $category['id'],
+                'name' => $category['name'],
+                'notes_count' => $category['notes_count']
+              ];
+            }
+        }, $categories);
+        return $this->responseSuccess('OK', array_filter($categories));
     }
 
     /**
