@@ -9,6 +9,7 @@ https://note.laravue.org
 
 ## 演示账号
 username: icheyy
+
 password: 123456
 
 ## 页面效果
